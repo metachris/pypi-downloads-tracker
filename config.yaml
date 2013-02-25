@@ -1,0 +1,11 @@
+# https://pypi.python.org/pypi/Django
+pypi-project:
+    name: Django
+    versions: [1.4.5, 1.4.4, 1.4.3]
+    csvfile: stats_django.csv
+---
+# https://pypi.python.org/pypi/Fabric
+pypi-project:
+    name: Fabric
+    versions: [1.5.3, 1.5.0, 1.4.0]
+    csvfile: stats_fabric.csv

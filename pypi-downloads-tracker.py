@@ -33,6 +33,7 @@ def get_stats(pypi_project, versions, csvfile):
         download_table = soup.find("table", "list")
 
         downloads_total = 0
+        cache = []
         for row in download_table.find_all("tr"):
             # Each row has a link and the last column is the downloads count
             href = row.find("a")
@@ -48,12 +49,15 @@ def get_stats(pypi_project, versions, csvfile):
             downloads = int(_downloads)
             downloads_cnt_version += downloads
             downloads_cnt_all += downloads
-            log_to_file(csvwriter, fn, version, downloads)
+            cache.append((fn, version, downloads))
 
         # In case there were multiple files for this version, this is for all
-        if downloads_cnt_version > downloads:
-            log_to_file(csvwriter, "TOTAL_VERSION", version, \
-                    downloads_cnt_version)
+        if len(cache) > 1:
+            for items in cache:
+                log_to_file(csvwriter, *items)
+
+        log_to_file(csvwriter, "TOTAL_VERSION", version, \
+                downloads_cnt_version)
         print
 
     # And this count is a total of all files of all versions
